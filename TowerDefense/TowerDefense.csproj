@@ -21,7 +21,7 @@
       <PrivateAssets Condition="'$(Configuration)' != 'Debug'">All</PrivateAssets>
     </PackageReference>
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.2" />
-    <None Include="TowerDefense\Models\Maps\map1.txt" CopyToOutputDirectory="PreserveNewest" />
+    <None Include="Models\Maps\map1.txt" CopyToOutputDirectory="PreserveNewest" />
    
   </ItemGroup>
 
