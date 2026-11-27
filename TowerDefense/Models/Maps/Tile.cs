@@ -11,40 +11,40 @@ public abstract class Tile
         X = x;
         Y = y;
     }
-    public class GrassTile : Tile
+}
+public class GrassTile : Tile
+{
+    public GrassTile(int x, int y) : base(x, y) { }
+}
+public class PathTile : Tile
+{
+    public PathTile(int x, int y) : base(x, y) { }
+    public override bool IsWalkable => true;
+}
+public class BuildableTile : Tile
+{
+    public bool IsOccupied { get; private set; }
+    public BuildableTile(int x, int y) : base(x, y)
     {
-        public GrassTile(int x, int y) : base(x, y) { }
+        IsOccupied = false;
     }
-    public class PathTile : Tile
+    public override bool IsBuildable => !IsOccupied;
+    public void Occupy()
     {
-        public PathTile(int x, int y) : base(x, y) { }
-        public override bool IsWalkable => true;
+        IsOccupied = true;
     }
-    public class BuildableTile : Tile
+    public void Vacate()
     {
-        public bool IsOccupied { get; private set; }
-        public BuildableTile(int x, int y) : base(x, y)
-        {
-            IsOccupied = false;
-        }
-        public override bool IsBuildable => !IsOccupied;
-        public void Occupy()
-        {
-            IsOccupied = true;
-        }
-        public void Vacate()
-        {
-            IsOccupied = false;
-        }
+        IsOccupied = false;
     }
-    public class StartTile : PathTile
-    {
-        public StartTile(int x, int y) : base(x, y) { }
-        public override bool IsWalkable => true;
-    }
-    public class EndTile : PathTile
-    {
-        public EndTile(int x, int y) : base(x, y) { }
-        public override bool IsWalkable => true;
-    }
+}
+public class StartTile : PathTile
+{
+    public StartTile(int x, int y) : base(x, y) { }
+    public override bool IsWalkable => true;
+}
+public class EndTile : PathTile
+{
+    public EndTile(int x, int y) : base(x, y) { }
+    public override bool IsWalkable => true;
 }

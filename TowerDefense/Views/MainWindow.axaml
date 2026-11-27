@@ -15,8 +15,22 @@
         <vm:MainViewModel />
     </Design.DataContext>
 
-    <TextBox Text="{Binding Greeting}"
-             HorizontalAlignment="Center"
-             VerticalAlignment="Center" />
+    <ItemsControl ItemsSource="{Binding Tiles}"
+                  HorizontalAlignment="Center"
+                  VerticalAlignment="Center">
+
+        <ItemsControl.ItemsPanel>
+            <ItemsPanelTemplate>
+                <UniformGrid Columns="{Binding MapWidth}" />
+            </ItemsPanelTemplate>
+        </ItemsControl.ItemsPanel>
+
+        <ItemsControl.ItemTemplate>
+            <DataTemplate x:DataType="vm:TileViewModel">
+                <Rectangle Width="40" Height="40" Fill="{Binding Color}" />
+            </DataTemplate>
+        </ItemsControl.ItemTemplate>
+
+    </ItemsControl>
 
 </Window>
