@@ -1,4 +1,4 @@
-namespace TowerDefense.Models.Map;
+namespace TowerDefense.Models.Maps;
 
 public abstract class Tile
 {
