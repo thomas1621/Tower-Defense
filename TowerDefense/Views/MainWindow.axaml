@@ -10,27 +10,60 @@
         Title="TowerDefense">
 
     <Design.DataContext>
-        <!-- This only sets the DataContext for the previewer in an IDE,
-             to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
         <vm:MainViewModel />
     </Design.DataContext>
 
-    <ItemsControl ItemsSource="{Binding Tiles}"
-                  HorizontalAlignment="Center"
-                  VerticalAlignment="Center">
+    <Viewbox Stretch="Uniform" Margin="20">
 
-        <ItemsControl.ItemsPanel>
-            <ItemsPanelTemplate>
-                <UniformGrid Columns="{Binding MapWidth}" />
-            </ItemsPanelTemplate>
-        </ItemsControl.ItemsPanel>
+        <!-- Le Grid qui empile les deux calques -->
+        <Grid>
 
-        <ItemsControl.ItemTemplate>
-            <DataTemplate x:DataType="vm:TileViewModel">
-                <Rectangle Width="40" Height="40" Fill="{Binding Color}" />
-            </DataTemplate>
-        </ItemsControl.ItemTemplate>
+            <!-- CALQUE 1 : les cases -->
+            <ItemsControl ItemsSource="{Binding Tiles}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <UniformGrid Columns="{Binding MapWidth}" />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate x:DataType="vm:TileViewModel">
+                        <Rectangle Width="40" Height="40" Fill="{Binding Color}" />
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
 
-    </ItemsControl>
+            <!-- CALQUE 2 : les ennemis, par-dessus -->
+            <ItemsControl ItemsSource="{Binding Enemies}">
+
+                <!-- Un Canvas de la même taille que la carte -->
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <Canvas Width="{Binding MapPixelWidth}"
+                                Height="{Binding MapPixelHeight}" />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+
+                <!-- La position de chaque ennemi -->
+                <ItemsControl.Styles>
+                    <Style Selector="ContentPresenter" x:DataType="vm:EnemyViewModel">
+                        <Setter Property="Canvas.Left" Value="{Binding X}" />
+                        <Setter Property="Canvas.Top" Value="{Binding Y}" />
+                    </Style>
+                </ItemsControl.Styles>
+
+                <!-- Le dessin d'un ennemi : un rond -->
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate x:DataType="vm:EnemyViewModel">
+                        <Ellipse Width="{Binding Diameter}"
+                                 Height="{Binding Diameter}"
+                                 Fill="{Binding Color}" />
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+
+            </ItemsControl>
+
+        </Grid>
+
+    </Viewbox>
 
 </Window>
