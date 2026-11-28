@@ -25,4 +25,9 @@ public class Map
     {
         return tiles[x, y];
     }
+
+    public bool IsInside(int x, int y)
+    {
+        return x >= 0 && x < Width && y >= 0 && y < Height;
+    }
 }
